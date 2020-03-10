@@ -8,7 +8,7 @@ const NavBar = () => {
             <Menu fixed='top' inverted>
                 <Container>
                     <Menu.Item>
-                        <img src="/assets/logo.png" alt="logo"/>
+                        <img src="/assets/logo.png" alt="logo" style={{marginRight: 10}}/>
                         Meet Down
                     </Menu.Item>
                     <Menu.Item name='Activities' />
