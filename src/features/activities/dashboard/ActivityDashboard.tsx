@@ -6,26 +6,29 @@ import ActivityDetails from '../details/ActivityDetails';
 import ActivityForm from '../form/ActivityForm';
 
 interface IProps {
-    activities: IActivity[]
-    selectActivity: (id: string) => void;
-    selectedActivity: IActivity;
+	activities: IActivity[]
+	selectActivity: (id: string) => void;
+	selectedActivity: IActivity;
+	editMode: boolean;
+	setEditMode: (editMode: boolean) => void;
+	setSelectedActivity: (activity: IActivity | null) => void;
 }
 
-const ActivityDashboard: React.FC<IProps> = ({activities, selectActivity, selectedActivity}) => {
-    return (
-        <Grid>
-            <Grid.Column width={10}>
-                <ActivityList 
-                    activities={activities} 
-                    selectActivity={selectActivity}
-                />
-            </Grid.Column>
-            <Grid.Column width={6}>
-                {selectedActivity && <ActivityDetails activity={selectedActivity}/>}
-                <ActivityForm/>
-            </Grid.Column>
-        </Grid>
-    )
+const ActivityDashboard: React.FC<IProps> = ({ activities, selectActivity, selectedActivity, editMode, setEditMode, setSelectedActivity }) => {
+	return (
+		<Grid>
+			<Grid.Column width={10}>
+				<ActivityList
+					activities={activities}
+					selectActivity={selectActivity}
+				/>
+			</Grid.Column>
+			<Grid.Column width={6}>
+				{selectedActivity && !editMode && <ActivityDetails activity={selectedActivity} setEditMode={setEditMode} setSelectedActivity={setSelectedActivity}/>}
+				{editMode && <ActivityForm setEditMode={setEditMode} activity={selectedActivity!}/> }
+			</Grid.Column>
+		</Grid>
+	)
 }
 
 export default ActivityDashboard;
