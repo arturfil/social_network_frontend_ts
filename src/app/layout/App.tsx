@@ -11,7 +11,7 @@ const App = () => {
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   const [editMode, setEditMode] = useState(false);
 
-  const handleSelectAcitivity = (id: string) => {
+  const handleSelectedActivity = (id: string) => {
     setSelectedActivity(activities.filter(a => a.id === id)[0])
   }
 
@@ -33,7 +33,7 @@ const App = () => {
       <Container style={{ marginTop: '7em' }}>
         <ActivityDashboard 
           activities={activities} 
-          selectActivity={handleSelectAcitivity} 
+          selectActivity={handleSelectedActivity} 
           selectedActivity={selectedActivity!}
           editMode={editMode}
           setEditMode={setEditMode}

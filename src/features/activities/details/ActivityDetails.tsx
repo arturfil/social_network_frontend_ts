@@ -22,7 +22,7 @@ const ActivityDetails: React.FC<IProps> = ({activity, setEditMode, setSelectedAc
       </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button.Group onClick={() => setSelectedActivity(null)} widths={2}>
+        <Button.Group widths={2}>
           <Button onClick={() => setEditMode(true)} basic color="blue" content="Edit"/>
           <Button onClick={() => setSelectedActivity(null)} basic color="grey" content="Cancel"/>
         </Button.Group>
