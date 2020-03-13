@@ -11,7 +11,7 @@ const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormState
 
 	const initializeForm = () => {
 		if (initialFormState) {
-			return initialFormState;
+			return initialFormState
 		} else {
 			return {
 				id: '',
@@ -25,7 +25,7 @@ const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormState
 		}
 	}
 
-	const [activity, setActivity] = useState<IActivity>(initializeForm)
+	const [activity, setActivity] = useState<IActivity>(initializeForm);
 
 	return (
 		<Segment clearing>
