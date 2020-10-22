@@ -31,7 +31,7 @@ const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activity}) => 
                   size='huge'
                   content={activity.title}
                   style={{ color: 'white' }} />
-                <p>{format(activity.date!, 'eeee do MMMMM')}</p>
+                <p>{format(activity.date, 'eeee do MMMMM')}</p>
                 <p>Hosted by <strong>Tim</strong></p>
               </Item.Content>
             </Item>
