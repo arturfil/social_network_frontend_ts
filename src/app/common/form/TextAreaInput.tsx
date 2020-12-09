@@ -19,4 +19,4 @@ const TextAreaInput: React.FC<IProps> = ({input, width, rows, placeholder, meta:
   )
 }
 
-export default TextAreaInput
+export default TextAreaInput;
