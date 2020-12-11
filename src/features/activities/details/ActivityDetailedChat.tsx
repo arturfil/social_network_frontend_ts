@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Header, Segment, Comment, Form, Button } from 'semantic-ui-react'
+import { RootStoreContext } from '../../../app/stores/rootStore'
+import { Form as FinalForm, Field } from 'react-final-form'
+import { Link } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
+import TextAreaInput from '../../../app/common/form/TextAreaInput'
 
 const ActivityDetailedChat = () => {
+  const rootStore = useContext(RootStoreContext);
+  const {createHubConnection, stopHubConnection, addComment, activity} = rootStore.activityStore;
+
+  useEffect(() => {
+    createHubConnection();
+    return () => {
+      stopHubConnection();
+    }
+  }, [createHubConnection, stopHubConnection])
+
   return (
     <>
       <Segment textAlign='center'
@@ -14,48 +29,43 @@ const ActivityDetailedChat = () => {
       </Segment>
       <Segment attached>
         <Comment.Group>
+          {activity && activity.comments && activity.comments.map(comment => (
+            <Comment key={comment.id}>
+              <Comment.Avatar src={comment.image || "/assets/user.png"}/>
+              <Comment.Content>
+                <Comment.Author as={Link} to={`/profile/${comment.username}`}>{comment.displayName}</Comment.Author>
+                <Comment.Metadata>
+                  <div>{comment.createdAt}</div>
+                </Comment.Metadata>
+                <Comment.Text>{comment.body}</Comment.Text>
+              </Comment.Content>
+            </Comment>
+          ))}
+          <FinalForm
+            onSubmit={addComment}
+            render={({handleSubmit, submitting, form}) => (
+            <Form onSubmit={() => handleSubmit()!.then(() => form.reset())}>
+              <Field
+                name='body'
+                component={TextAreaInput}
+                rows={2}
+                placeholder='Add your comment'
+              />
+              <Button 
+                content='Add Reply'
+                labelPosition='left'
+                icon='edit'
+                primary
+                loading={submitting}
+              />
+            </Form>
 
-          <Comment>
-            <Comment.Avatar src="/assets/user.png"/>
-            <Comment.Content>
-              <Comment.Author as='a'>Matt</Comment.Author>
-              <Comment.Metadata>
-                <div>Today at 4:45</div>
-              </Comment.Metadata>
-              <Comment.Text>How artistic!</Comment.Text>
-              <Comment.Actions>
-                <Comment.Action>Reply</Comment.Action>
-              </Comment.Actions>
-            </Comment.Content>
-          </Comment>
-
-          <Comment>
-            <Comment.Avatar src="/assets/user.png"/>
-            <Comment.Content>
-              <Comment.Author as='a'>Joe Henderson</Comment.Author>
-              <Comment.Metadata>
-                <div>Today at 4:45</div>
-              </Comment.Metadata>
-              <Comment.Text>Faaanks!</Comment.Text>
-              <Comment.Actions>
-                <Comment.Action>Reply</Comment.Action>
-              </Comment.Actions>
-            </Comment.Content>
-          </Comment>
-
-          <Form reply>
-            <Form.TextArea />
-            <Button  
-              content='Add Reply'
-              labelPosition='left'
-              icon='edit'
-              primary
-            />
-          </Form>
+            )}
+          />
         </Comment.Group>
       </Segment>
     </>
   )
 }
 
-export default ActivityDetailedChat
+export default observer(ActivityDetailedChat);

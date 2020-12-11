@@ -1,4 +1,3 @@
-import { isPropertyConfigurable } from 'mobx/lib/internal'
 import React from 'react'
 import { Form as FinalForm, Field } from 'react-final-form'
 import { combineValidators, isRequired } from 'revalidate'
